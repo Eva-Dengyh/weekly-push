@@ -1,8 +1,19 @@
 # 数据源：GitHub 目录 URL，支持多个
 sources:
+  # Anthropic 官方 Skills（17 个工具）
   - url: "https://github.com/anthropics/skills/tree/main/skills"
-    # 可继续添加，格式相同：
-  # - url: "https://github.com/punkpeye/awesome-mcp-servers/tree/main/servers"
+  # Anthropic 官方 MCP 参考实现（7 个服务）
+  - url: "https://github.com/modelcontextprotocol/servers/tree/main/src"
+  # 社区 Skills - 工程研发（48 个工具）
+  - url: "https://github.com/alirezarezvani/claude-skills/tree/main/engineering"
+  # 社区 Skills - 产品团队（18 个工具）
+  - url: "https://github.com/alirezarezvani/claude-skills/tree/main/product-team"
+  # 社区 Skills - 市场营销（46 个工具）
+  - url: "https://github.com/alirezarezvani/claude-skills/tree/main/marketing-skill"
+  # 社区 Skills - 高管战略（30 个工具）
+  - url: "https://github.com/alirezarezvani/claude-skills/tree/main/c-level-advisor"
+  # 社区 Skills - 财务（5 个工具）
+  - url: "https://github.com/alirezarezvani/claude-skills/tree/main/finance"
 
 # 每期每个岗位的目标工具数
 tools_per_role: 5
