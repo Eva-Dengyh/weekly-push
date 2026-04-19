@@ -9,6 +9,7 @@
 import argparse
 import json
 import logging
+import os
 import sys
 from datetime import date
 from pathlib import Path
@@ -54,6 +55,25 @@ def main():
     sources = [s["url"] for s in config["sources"]]
     roles = config["roles"]
     tools_per_role = config.get("tools_per_role", 5)
+
+    # 从 .env 加载环境变量
+    env_path = ROOT / ".env"
+    if env_path.exists():
+        with open(env_path) as f:
+            for line in f:
+                line = line.strip()
+                if line and not line.startswith("#") and "=" in line:
+                    k, v = line.split("=", 1)
+                    os.environ.setdefault(k.strip(), v.strip())
+
+    # 注入 GitHub Token
+    from src import fetcher
+    token = os.environ.get("GITHUB_TOKEN", "").strip()
+    if token:
+        fetcher.set_token(token)
+        logger.info("已使用 GitHub Token（限速 5000次/小时）")
+    else:
+        logger.info("未配置 GitHub Token，使用匿名模式（限速 60次/小时）")
 
     logger.info(f"===== 开始生成第 {issue} 期 =====")
 

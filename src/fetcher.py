@@ -41,9 +41,19 @@ def _parse_github_url(url: str) -> tuple[str, str, str]:
     return owner, repo, path.rstrip("/")
 
 
+_github_token: Optional[str] = None
+
+
+def set_token(token: str) -> None:
+    global _github_token
+    _github_token = token
+
+
 def _get(url: str, params: Optional[dict] = None) -> dict | list:
     """带限速的 GitHub API GET 请求。"""
     headers = {"Accept": "application/vnd.github+json"}
+    if _github_token:
+        headers["Authorization"] = f"Bearer {_github_token}"
     resp = requests.get(url, headers=headers, params=params, timeout=15)
     time.sleep(REQUEST_INTERVAL)
 
