@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>每周特推 · 第 {{ issue }} 期</title>
+<style>
+  :root{
+    --bg:#0b0d12;--bg2:#11141b;--bg3:#161a23;--line:#232834;
+    --txt:#e6e8ee;--dim:#8a93a6;--mute:#5a6275;
+    --claw:#ff6b6b;--hermes:#c49257;--cc:#a78bfa;--mcp:#4ecdc4;
+    --ok:#7bd88f;--warn:#ffbf4d;--danger:#ff5d6c;--info:#60a5fa;
+    --code:#0d1117;--hi:#ffcc66;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--bg);color:var(--txt);font:14px/1.75 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
+  body{max-width:1180px;margin:0 auto;padding:28px 24px 120px}
+  a{color:var(--info);text-decoration:none;border-bottom:1px dashed transparent}
+  a:hover{border-bottom-color:var(--info)}
+  code{background:var(--code);padding:2px 6px;border-radius:4px;font-size:12.5px;color:var(--hi)}
+  pre{background:var(--code);padding:14px 16px;border-radius:8px;overflow-x:auto;border:1px solid var(--line);margin:10px 0}
+  pre code{background:transparent;padding:0;color:#cfd3dc;font-size:12.5px;line-height:1.7}
+
+  header{padding:28px 0 22px;border-bottom:1px solid var(--line);margin-bottom:22px}
+  h1{font-size:30px;font-weight:700;letter-spacing:.3px}
+  .sub{color:var(--dim);font-size:14px;margin-top:10px;line-height:1.9}
+  .sub b{color:var(--txt)}
+  .tabs{margin-top:18px;display:flex;gap:8px;flex-wrap:wrap}
+  .tabs button{background:var(--bg2);color:var(--dim);border:1px solid var(--line);padding:8px 16px;border-radius:6px;cursor:pointer;font:inherit;transition:.15s}
+  .tabs button:hover{color:var(--txt)}
+  .tabs button.active{background:var(--cc);color:#1a1330;border-color:var(--cc);font-weight:600}
+  .tabs .hint{color:var(--mute);font-size:12px;align-self:center;margin-left:8px}
+
+  .toc{background:var(--bg2);padding:18px 22px;border-radius:10px;margin:20px 0;border:1px solid var(--line)}
+  .toc h3{font-size:13px;color:var(--dim);margin-bottom:10px;text-transform:uppercase;letter-spacing:1px;font-weight:600}
+  .toc ol{list-style:none;display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:4px 16px}
+  .toc a{display:block;padding:4px 0;border:none;color:var(--txt)}
+  .toc a:hover{color:var(--info)}
+  .toc .num{color:var(--mute);margin-right:8px;font-variant-numeric:tabular-nums}
+
+  section.role{margin:52px 0;padding-top:26px;border-top:1px solid var(--line)}
+  section.role h2{font-size:22px;margin-bottom:8px}
+  section.role .lead{color:var(--dim);font-size:14px;margin-bottom:20px;padding:10px 14px;background:var(--bg2);border-left:3px solid var(--ok);border-radius:4px}
+  section.role .lead b{color:var(--hi)}
+
+  .skill{background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:20px 22px;margin:14px 0;position:relative;border-left-width:4px;border-left-style:solid}
+  .skill.from-claw{border-left-color:var(--claw)}
+  .skill.from-hermes{border-left-color:var(--hermes)}
+  .skill.from-cc{border-left-color:var(--cc)}
+  .skill.from-mcp{border-left-color:var(--mcp)}
+  .skill h3{font-size:18px;font-weight:700;display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:4px}
+  .skill h3 .rank{color:var(--mute);font-size:13px;font-weight:500}
+  .skill h3 .name{color:var(--txt)}
+  .plat{font-size:11px;padding:2px 9px;border-radius:3px;font-weight:700;letter-spacing:.5px;border:1px solid}
+  .plat.claw{background:#3a1a1a;color:var(--claw);border-color:#5a2a2a}
+  .plat.hermes{background:#3a2a1a;color:var(--hermes);border-color:#5a4a2a}
+  .plat.cc{background:#2a2058;color:var(--cc);border-color:#4a3a78}
+  .plat.mcp{background:#1a3a3a;color:var(--mcp);border-color:#2a5a5a}
+  .tag{font-size:10.5px;padding:1px 7px;border-radius:3px;font-weight:600;letter-spacing:.3px}
+  .tag.off{background:#1a3a2e;color:var(--ok)}
+  .tag.comm{background:#3a2d1f;color:var(--warn)}
+  .tag.new{background:#2a2558;color:var(--cc)}
+  .tag.hot{background:#3a1a1a;color:#ff8b99}
+  .skill .tagline{color:var(--dim);font-size:13px;margin:2px 0 14px}
+  .skill .row{display:grid;grid-template-columns:90px 1fr;gap:10px 16px;margin-top:8px;font-size:13.5px;line-height:1.75}
+  .skill .row .k{color:var(--mute);font-size:12px;letter-spacing:.5px;text-transform:uppercase;padding-top:2px}
+  .skill .row .v{color:var(--txt)}
+  .skill .row .v b{color:var(--hi)}
+  .skill .use{margin-top:12px;padding:10px 14px;background:var(--bg3);border-radius:6px;font-size:13px;color:#d6dbe4}
+  .skill .use .ex{color:var(--info);font-weight:600;font-size:11.5px;letter-spacing:.5px;display:block;margin-bottom:4px}
+
+  .tech-only,.biz-only{display:none}
+  body[data-mode="tech"] .tech-only{display:block}
+  body[data-mode="biz"] .biz-only{display:block}
+  body[data-mode="both"] .tech-only,body[data-mode="both"] .biz-only{display:block}
+  body[data-mode="both"] .tech-only::before{content:"⚡ 技术视角";color:var(--cc);font-size:10.5px;font-weight:700;display:block;margin-bottom:4px;letter-spacing:.8px}
+  body[data-mode="both"] .biz-only::before{content:"💼 白话视角";color:var(--info);font-size:10.5px;font-weight:700;display:block;margin-bottom:4px;letter-spacing:.8px}
+
+  .legend{display:flex;gap:14px;flex-wrap:wrap;margin:10px 0 0;font-size:12px;color:var(--dim)}
+  .legend span{display:inline-flex;align-items:center;gap:6px}
+  .legend .dot{width:10px;height:10px;border-radius:50%;display:inline-block}
+  .dot.claw{background:var(--claw)}.dot.hermes{background:var(--hermes)}.dot.cc{background:var(--cc)}.dot.mcp{background:var(--mcp)}
+
+  footer{margin-top:70px;padding-top:22px;border-top:1px solid var(--line);color:var(--mute);font-size:12px;text-align:center;line-height:1.8}
+</style>
+</head>
+<body data-mode="both">
+
+<header>
+  <h1>🔥 每周特推 · 第 {{ issue }} 期</h1>
+  <div class="sub">
+    <b>各岗位最好用的 AI 技能</b> · {{ date }} · 11 岗位 × 精选 {{ total_tools }} 个技能
+  </div>
+  <div class="legend">
+    <span><i class="dot claw"></i>OpenClaw 🦞</span>
+    <span><i class="dot hermes"></i>Hermes 📜</span>
+    <span><i class="dot cc"></i>Claude Code 🤖</span>
+    <span><i class="dot mcp"></i>跨平台 MCP 🧩</span>
+  </div>
+  <div class="tabs">
+    <button data-mode="both" class="active">🔄 双视角</button>
+    <button data-mode="tech">⚡ 技术视角</button>
+    <button data-mode="biz">💼 白话视角</button>
+    <span class="hint">← 上下班路上可以切白话视角</span>
+  </div>
+</header>
+
+<nav class="toc">
+  <h3>目录</h3>
+  <ol>
+    {% for section in sections %}
+    <li><a href="#{{ section.id }}"><span class="num">{{ '%02d'|format(section.order) }}</span>{{ section.emoji }} {{ section.label }}</a></li>
+    {% endfor %}
+  </ol>
+</nav>
+
+{% for section in sections %}
+<section class="role" id="{{ section.id }}">
+  <h2>{{ section.emoji }} {{ loop.index }}、{{ section.label }}</h2>
+  <p class="lead">本期为 {{ section.label }} 同学推 <b>{{ section.tools|length }} 个</b>工具。</p>
+
+  {% for tool in section.tools %}
+  {% set plat_class = tool.platform_class | default('from-mcp') %}
+  {% set plat_label = tool.platform_label | default('🧩 MCP') %}
+  {# 从 platform_class 推导 plat 样式类 #}
+  {% if 'claw' in plat_class %}{% set plat_style = 'claw' %}
+  {% elif 'hermes' in plat_class %}{% set plat_style = 'hermes' %}
+  {% elif 'cc' in plat_class %}{% set plat_style = 'cc' %}
+  {% else %}{% set plat_style = 'mcp' %}{% endif %}
+
+  <div class="skill {{ plat_class }}">
+    <h3>
+      <span class="rank">#{{ loop.index }}</span>
+      <span class="name">{{ tool.name }}</span>
+      <span class="plat {{ plat_style }}">{{ plat_label }}</span>
+      {% for tag in tool.tags | default([]) %}
+      <span class="tag off">{{ tag }}</span>
+      {% endfor %}
+    </h3>
+    <p class="tagline">{{ tool.tagline }}</p>
+    <div class="row">
+      <div class="k">它做什么</div><div class="v">{{ tool.what }}</div>
+      <div class="k">为啥特推</div><div class="v">{{ tool.why }}</div>
+    </div>
+    {% if tool.example_biz %}
+    <div class="use biz-only"><span class="ex">💼 例子</span>{{ tool.example_biz }}</div>
+    {% endif %}
+    <div class="use tech-only">
+      <span class="ex">⚡ {% if tool.install_cmd %}安装{% else %}说明{% endif %}</span>
+      {% if tool.install_cmd %}<code>{{ tool.install_cmd }}</code>{% else %}{{ tool.example_tech }}{% endif %}
+    </div>
+  </div>
+  {% else %}
+  <p style="color:var(--mute);font-size:13px;">本岗位本期暂无推荐工具。</p>
+  {% endfor %}
+</section>
+{% endfor %}
+
+<footer>
+  每周特推 · 第 {{ issue }} 期 · {{ date }}<br>
+  自动生成 · 内容基于 GitHub 开源项目 · 请结合实际需求评估后使用
+</footer>
+
+<script>
+  const body = document.body;
+  document.querySelectorAll('.tabs button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tabs button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      body.dataset.mode = btn.dataset.mode;
+    });
+  });
+</script>
+</body>
+</html>

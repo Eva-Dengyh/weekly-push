@@ -1,0 +1,55 @@
+# 数据源：GitHub 目录 URL，支持多个
+sources:
+  - url: "https://github.com/anthropics/skills/tree/main/skills"
+    # 可继续添加，格式相同：
+  # - url: "https://github.com/punkpeye/awesome-mcp-servers/tree/main/servers"
+
+# 每期每个岗位的目标工具数
+tools_per_role: 5
+
+# 固定岗位列表（顺序即渲染顺序）
+roles:
+  - id: ui-frontend
+    label: "UI / 前端"
+    emoji: "🎨"
+    order: 1
+  - id: qa-testing
+    label: "QA 测试"
+    emoji: "🧪"
+    order: 2
+  - id: product-manager
+    label: "产品经理"
+    emoji: "📊"
+    order: 3
+  - id: backend-dev
+    label: "后端开发"
+    emoji: "💻"
+    order: 4
+  - id: devops
+    label: "运维"
+    emoji: "🛠️"
+    order: 5
+  - id: seo
+    label: "SEO / 站群"
+    emoji: "🚀"
+    order: 6
+  - id: biz-service
+    label: "商务 / 客服"
+    emoji: "🤝"
+    order: 7
+  - id: data-bi
+    label: "数据 / BI"
+    emoji: "📈"
+    order: 8
+  - id: hr
+    label: "HR / 招聘"
+    emoji: "👥"
+    order: 9
+  - id: finance
+    label: "财务"
+    emoji: "💰"
+    order: 10
+  - id: content
+    label: "内容创作"
+    emoji: "🎬"
+    order: 11
